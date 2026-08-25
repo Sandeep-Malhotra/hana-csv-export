@@ -1,0 +1,18 @@
+{
+  "name": "hana-export-utility",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently --kill-others-on-fail -n \"backend,frontend,browser\" -c \"blue,green,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run open\"",
+    "dev:backend": "cd backend && npm run start:dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "open": "wait-on http://localhost:3001/api/connections http://localhost:3000 && open-cli http://localhost:3000",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9",
+    "open-cli": "^9.0.0",
+    "wait-on": "^9.1.0"
+  }
+}
