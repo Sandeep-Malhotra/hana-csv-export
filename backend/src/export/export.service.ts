@@ -73,6 +73,7 @@ export class ExportService {
     };
 
     this.jobs.set(jobId, job);
+    this.trimJobs();
 
     this.logger.log(
       `Export job ${jobId} started — ${objects.length} object(s) from "${config.name}" (schema: ${config.schema}), workers: ${MAX_CONCURRENT}`,
@@ -147,7 +148,7 @@ export class ExportService {
     obj.status = 'running';
     emitProgress();
 
-    const filePath = path.join(this.csvBaseDir, obj.csvFileName);
+    const filePath = path.join(this.csvBaseDir, path.basename(obj.csvFileName));
     obj.filePath = filePath;
 
     const start = Date.now();
@@ -273,5 +274,14 @@ export class ExportService {
 
   getJobOutputDir(_jobId: string): string {
     return this.csvBaseDir;
+  }
+
+  private trimJobs(max = 50): void {
+    if (this.jobs.size <= max) return;
+    const sorted = Array.from(this.jobs.values()).sort(
+      (a, b) => new Date(a.startedAt).getTime() - new Date(b.startedAt).getTime(),
+    );
+    const toRemove = sorted.slice(0, this.jobs.size - max);
+    for (const job of toRemove) this.jobs.delete(job.jobId);
   }
 }

@@ -76,7 +76,7 @@ export default function ConnectionManager() {
 
   useEffect(() => {
     loadConnections();
-    getCsnStatus().then(setCsnStatus).catch(() => {});
+    getCsnStatus().then(setCsnStatus).catch(() => setCsnStatus({ loaded: false, entityCount: 0 }));
   }, [loadConnections]);
 
   const openCreate = () => {

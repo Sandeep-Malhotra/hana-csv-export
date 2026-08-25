@@ -103,11 +103,11 @@ export default function Settings() {
             CSV output directory
           </label>
           <p className="text-xs text-zinc-500 mb-2">
-            Exported files are saved here. Each job creates a sub-folder named
-            by its job ID.
+            Exported files are saved here. All files are written directly into
+            the folder — one CSV per entity.
           </p>
           <code className="block text-xs font-mono bg-zinc-800 text-zinc-300 px-3 py-2 rounded-md">
-            &lt;project-root&gt;/csv/&lt;jobId&gt;/&lt;TABLE_NAME&gt;.csv
+            &lt;project-root&gt;/csv/&lt;EntityName&gt;.csv
           </code>
         </div>
 
